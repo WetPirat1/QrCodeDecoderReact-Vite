@@ -1,21 +1,37 @@
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
+import s from "./QrCodeGenerator.module.css";
 
 export const QrCodeGenerator = () => {
   const [enteredText, setEnteredText] = useState("");
+  const [result, setResult] = useState("");
 
-  const onClickHandler = () => {};
-  const onChangeHandler = (event) => {
-    setEnteredText(event.target.value);
+  const onClickHandler = (event) => {
+    setResult(enteredText);
+    setEnteredText("");
   };
 
-  console.log(enteredText)
+  const onChangeHandler = (event) => {
+    setEnteredText(event.target.value);
+    setResult("");
+  };
+
+  console.log("result: ", result);
 
   return (
-    <div>
-      <QRCodeSVG value="FUCK YOU!" />,
-      <input type="text" value={enteredText} onChange={onChangeHandler}></input>
-      <button type="button" onClick={onClickHandler}>
+    <div className={s.container}>
+      <div className={s.qrWrapper}>
+        {result !== "" && <QRCodeSVG value={enteredText} />}
+      </div>
+
+      <input
+        placeholder="enter text"
+        type="text"
+        value={enteredText}
+        onChange={onChangeHandler}
+        className={s.input}
+      ></input>
+      <button className={s.button} type="button" onClick={onClickHandler}>
         Generate
       </button>
     </div>
